@@ -36,7 +36,7 @@ export default function InviteScreen() {
   useEffect(() => {
     const canvas = canvasRef.current
     if (!canvas) return
-    const ctx = canvas.getContext('2d')
+    const ctx = canvas.getContext('2d', { willReadFrequently: true })
     canvas.width = canvas.offsetWidth
     canvas.height = canvas.offsetHeight
     totalPx.current = canvas.width * canvas.height
@@ -61,7 +61,7 @@ export default function InviteScreen() {
     e.preventDefault()
     if (!drawing.current) return
     const canvas = canvasRef.current
-    const ctx = canvas.getContext('2d')
+    const ctx = canvas.getContext('2d', { willReadFrequently: true })
     const pos = getPos(e, canvas)
     ctx.globalCompositeOperation = 'destination-out'
     ctx.beginPath()

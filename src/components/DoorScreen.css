@@ -1,21 +1,25 @@
+/* Lock scroll while door screen is shown */
+:root { scroll-behavior: auto; }
+
 .door-screen {
-  width: 100%;
-  height: 100dvh;
-  min-height: 100vh;
-  background: #0a1505;
   position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;
+  width: 100%; height: 100%;
+  background: #0a1505;
   overflow: hidden;
   cursor: pointer;
   transition: opacity 0.85s ease, transform 0.85s ease;
   -webkit-tap-highlight-color: transparent;
   z-index: 1000;
+  /* Prevent any scroll */
+  touch-action: none;
 }
 .door-screen.exit {
   opacity: 0;
   transform: scale(1.05);
   pointer-events: none;
 }
+
 .door-video {
   position: absolute;
   top: 0; left: 0;
@@ -24,7 +28,26 @@
   object-fit: cover;
   object-position: center center;
   z-index: 1;
+  /* iOS Safari fix */
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
 }
+
+/* Loading spinner */
+.door-loading {
+  position: absolute;
+  inset: 0; z-index: 3;
+  display: flex; align-items: center; justify-content: center;
+}
+.door-spinner {
+  width: 32px; height: 32px;
+  border: 2px solid rgba(212,176,106,0.25);
+  border-top-color: rgba(212,176,106,0.8);
+  border-radius: 50%;
+  animation: spin 0.9s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
 .door-hint {
   position: absolute;
   top: 50%; left: 50%;
@@ -44,11 +67,17 @@
   border-radius: 2px;
   border: 1px solid rgba(212,176,106,0.4);
 }
+.door-hint-loading {
+  color: rgba(212,176,106,0.7);
+  font-size: 13px;
+  letter-spacing: 0.28em;
+  animation: pulse-door 1.5s ease-in-out infinite;
+}
 .door-leaf {
   color: rgba(212,176,106,0.85);
   font-size: 14px;
 }
 @keyframes pulse-door {
-  0%,100% { opacity: 0.65; }
+  0%,100% { opacity: 0.6; }
   50% { opacity: 1; }
 }

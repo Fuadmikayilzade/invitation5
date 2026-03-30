@@ -4,7 +4,7 @@ import './RSVPCard.css'
 const WP = '994104195344'
 
 export default function RSVPCard() {
-  const [form, setForm] = useState({ name:'', guests:'1', attending:'yes', dietary:'', message:'' })
+  const [form, setForm] = useState({ name:'', guests:'1', attending:'yes', message:'' })
   const [submitted, setSubmitted] = useState(false)
   const [nameErr, setNameErr] = useState(false)
   const inv = ""
@@ -16,7 +16,7 @@ export default function RSVPCard() {
     const msg = encodeURIComponent(
       `🌿 TOY RSVP — Sadiq & Ülkər\n\nAd: ${form.name}\nNəfər: ${form.guests}\n` +
       `İştirak: ${form.attending==='yes'?'Bəli ✓':'Xeyr ✗'}\n` +
-      `Qida: ${form.dietary||'Yoxdur'}\nMesaj: ${form.message||'—'}`
+      `Mesaj: ${form.message||'—'}`
     )
     window.open(`https://wa.me/${WP}?text=${msg}`, '_blank')
     setSubmitted(true)
@@ -66,12 +66,6 @@ export default function RSVPCard() {
             <button className={`radio-btn ${inv} ${form.attending==='yes'?'sel':''}`} onClick={()=>set('attending','yes')}>✓ Bəli, iştirak edəcəm</button>
             <button className={`radio-btn ${inv} ${form.attending==='no'?'sel':''}`} onClick={()=>set('attending','no')}>✗ Təəssüf, edə bilmərəm</button>
           </div>
-        </div>
-
-        <div className="rsvp-field">
-          <label className={`rsvp-lbl ${inv}`}>Xüsusi qida (istəyə görə)</label>
-          <input className={`rsvp-inp ${inv}`} type="text" placeholder="Veqan, allergiya və s."
-            value={form.dietary} onChange={e=>set('dietary',e.target.value)} />
         </div>
 
         <div className="rsvp-field">

@@ -9,6 +9,29 @@ export default function App() {
   const [musicPlaying, setMusicPlaying] = useState(false)
   const audioRef = useRef(null)
 
+  // Lock body scroll when door is shown, unlock when invite opens
+  useEffect(() => {
+    if (screen === 'door') {
+      document.body.style.overflow = 'hidden'
+      document.body.style.position = 'fixed'
+      document.body.style.width = '100%'
+      document.body.style.top = '0'
+    } else {
+      document.body.style.overflow = ''
+      document.body.style.position = ''
+      document.body.style.width = ''
+      document.body.style.top = ''
+      // Scroll to top when invite opens
+      window.scrollTo(0, 0)
+    }
+    return () => {
+      document.body.style.overflow = ''
+      document.body.style.position = ''
+      document.body.style.width = ''
+      document.body.style.top = ''
+    }
+  }, [screen])
+
   useEffect(() => {
     audioRef.current = new Audio('/music.mp3')
     audioRef.current.loop = true
@@ -36,11 +59,9 @@ export default function App() {
   return (
     <div className={`app-root ${transitioning ? 'fading' : ''}`}>
       {screen === 'door' && <DoorScreen onOpen={handleOpen} />}
-      {screen === 'invite' && (
-        <InviteScreen />
-      )}
+      {screen === 'invite' && <InviteScreen />}
 
-      {/* Music button - at App level, always fixed, never affected by transforms */}
+      {/* Music button - App level, truly fixed */}
       {screen === 'invite' && (
         <button
           className="app-music-btn"

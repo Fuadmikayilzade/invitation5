@@ -3,10 +3,10 @@
   width: 100%; min-height: 100dvh;
   background: #f8fdf4;           /* always cream, never changes */
   overflow-x: hidden;
-  opacity: 0; transform: translateY(12px);
-  transition: opacity 0.7s ease, transform 0.7s ease;
+  opacity: 0;
+  transition: opacity 0.7s ease;
 }
-.invite.inv-visible { opacity: 1; transform: translateY(0); }
+.invite.inv-visible { opacity: 1; }
 
 /* ── Music button - fixed, always on top ── */
 .music-btn {
