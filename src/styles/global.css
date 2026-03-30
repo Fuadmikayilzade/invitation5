@@ -3,51 +3,43 @@
   --green-rich: #2d5016;
   --green-mid: #4a7c2f;
   --green-light: #7ab355;
-  --green-pale: #d4edbc;
   --gold: #b8943f;
-  --gold-light: #d4b06a;
-  --cream: #fffdf8;
   --ivory: #f8fdf4;
 }
 
-/* ── iOS scroll fix ── */
+/* iOS scroll - never block body */
 html {
-  height: auto;
-  overflow-y: auto;
-  -webkit-text-size-adjust: 100%;
+  height: 100%;
+  overflow-y: scroll;           /* always scrollable */
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: auto;
 }
 
 body {
-  height: auto;
   min-height: 100%;
-  overflow-y: auto;
+  height: auto;
+  overflow-y: visible;
   -webkit-overflow-scrolling: touch;
-  overscroll-behavior-y: auto;
   font-family: 'Cormorant Garamond', Georgia, serif;
   background: #f8fdf4;
   -webkit-font-smoothing: antialiased;
   color: #1a3a0a;
-  margin: 0;
-  padding: 0;
+  margin: 0; padding: 0;
 }
 
 *, *::before, *::after {
   box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  -webkit-overflow-scrolling: touch;
+  margin: 0; padding: 0;
 }
 
 #root {
-  height: auto;
   min-height: 100%;
-  overflow: visible;
+  height: auto;
 }
 
 ::-webkit-scrollbar { width: 3px; }
 ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 2px; }
 
-/* Shared utilities */
 .g-divider {
   display: flex; align-items: center; gap: 10px;
   margin: 12px auto; width: 65%; max-width: 220px;
@@ -59,19 +51,6 @@ body {
 .g-diamond {
   width: 5px; height: 5px;
   background: var(--gold); transform: rotate(45deg); flex-shrink: 0;
-}
-
-.sec-label {
-  font-family: 'Cinzel', serif;
-  font-size: 10px; letter-spacing: 0.28em;
-  text-transform: uppercase; text-align: center;
-  color: var(--green-rich); margin-bottom: 12px;
-}
-
-.ornament {
-  text-align: center; font-size: 9px;
-  letter-spacing: 6px; padding: 4px 0;
-  color: rgba(184,148,63,0.35);
 }
 
 .reveal {

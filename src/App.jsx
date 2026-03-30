@@ -5,9 +5,9 @@ import './styles/App.css'
 
 export default function App() {
   const [screen, setScreen] = useState('door')
-  const [transitioning, setTransitioning] = useState(false)
   const [musicPlaying, setMusicPlaying] = useState(false)
   const audioRef = useRef(null)
+  const scrollY = useRef(0)
 
   useEffect(() => {
     audioRef.current = new Audio('/music.mp3')
@@ -16,31 +16,6 @@ export default function App() {
     return () => audioRef.current?.pause()
   }, [])
 
-  // Only lock scroll during door screen, never touch body after
-  useEffect(() => {
-    if (screen === 'door') {
-      document.body.style.overflow = 'hidden'
-      document.body.style.position = 'fixed'
-      document.body.style.width = '100%'
-      document.body.style.top = '0'
-    } else {
-      // Fully restore scroll for iOS
-      document.body.style.overflow = ''
-      document.body.style.position = ''
-      document.body.style.width = ''
-      document.body.style.top = ''
-      document.body.style.height = ''
-      window.scrollTo({ top: 0, behavior: 'instant' })
-    }
-    return () => {
-      document.body.style.overflow = ''
-      document.body.style.position = ''
-      document.body.style.width = ''
-      document.body.style.top = ''
-      document.body.style.height = ''
-    }
-  }, [screen])
-
   const toggleMusic = () => {
     if (musicPlaying) { audioRef.current.pause() }
     else { audioRef.current.play().catch(() => {}) }
@@ -48,26 +23,22 @@ export default function App() {
   }
 
   const handleOpen = () => {
-    if (transitioning) return
-    setTransitioning(true)
     audioRef.current.play().catch(() => {})
     setMusicPlaying(true)
-    setTimeout(() => {
-      setScreen('invite')
-      setTransitioning(false)
-    }, 900)
+    setScreen('invite')
   }
 
   return (
-    <div className={`app-root ${transitioning ? 'fading' : ''}`}>
+    <>
       {screen === 'door' && <DoorScreen onOpen={handleOpen} />}
-      {screen === 'invite' && <InviteScreen />}
-
       {screen === 'invite' && (
-        <button className="app-music-btn" onClick={toggleMusic} aria-label="Musiqi">
-          <span>{musicPlaying ? '♪' : '♩'}</span>
-        </button>
+        <>
+          <InviteScreen />
+          <button className="app-music-btn" onClick={toggleMusic} aria-label="Musiqi">
+            <span>{musicPlaying ? '♪' : '♩'}</span>
+          </button>
+        </>
       )}
-    </div>
+    </>
   )
 }
