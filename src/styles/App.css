@@ -1,11 +1,13 @@
 .app-root {
   width: 100%;
-  min-height: 100dvh;
+  height: auto;
+  min-height: 100%;
+  overflow: visible;
   transition: opacity 0.9s ease;
 }
 .app-root.fading { opacity: 0; pointer-events: none; }
 
-/* Music button at App level — truly fixed, never inside a transformed div */
+/* Music button - truly fixed at root level */
 .app-music-btn {
   position: fixed;
   bottom: 22px;

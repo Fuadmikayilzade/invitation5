@@ -6,27 +6,42 @@
   --green-pale: #d4edbc;
   --gold: #b8943f;
   --gold-light: #d4b06a;
-  --gold-pale: #f0e0b8;
   --cream: #fffdf8;
   --ivory: #f8fdf4;
-  --white: #ffffff;
-  --text-dark: #1a2e0a;
-  --text-mid: #3d5a1f;
 }
 
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-html, body, #root {
-  width: 100%;
-  min-height: 100dvh;
-  overflow-x: hidden;
+/* ── iOS scroll fix ── */
+html {
+  height: auto;
+  overflow-y: auto;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
+  height: auto;
+  min-height: 100%;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-y: auto;
   font-family: 'Cormorant Garamond', Georgia, serif;
-  background: var(--ivory);
+  background: #f8fdf4;
   -webkit-font-smoothing: antialiased;
-  color: var(--text-dark);
+  color: #1a3a0a;
+  margin: 0;
+  padding: 0;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-overflow-scrolling: touch;
+}
+
+#root {
+  height: auto;
+  min-height: 100%;
+  overflow: visible;
 }
 
 ::-webkit-scrollbar { width: 3px; }
@@ -60,7 +75,7 @@ body {
 }
 
 .reveal {
-  opacity: 0; transform: translateY(28px);
-  transition: opacity 0.65s ease, transform 0.65s ease;
+  opacity: 0; transform: translateY(24px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
 }
 .reveal.visible { opacity: 1; transform: translateY(0); }

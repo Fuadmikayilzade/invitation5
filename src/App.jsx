@@ -9,7 +9,14 @@ export default function App() {
   const [musicPlaying, setMusicPlaying] = useState(false)
   const audioRef = useRef(null)
 
-  // Lock body scroll when door is shown, unlock when invite opens
+  useEffect(() => {
+    audioRef.current = new Audio('/music.mp3')
+    audioRef.current.loop = true
+    audioRef.current.volume = 0.45
+    return () => audioRef.current?.pause()
+  }, [])
+
+  // Only lock scroll during door screen, never touch body after
   useEffect(() => {
     if (screen === 'door') {
       document.body.style.overflow = 'hidden'
@@ -17,27 +24,22 @@ export default function App() {
       document.body.style.width = '100%'
       document.body.style.top = '0'
     } else {
+      // Fully restore scroll for iOS
       document.body.style.overflow = ''
       document.body.style.position = ''
       document.body.style.width = ''
       document.body.style.top = ''
-      // Scroll to top when invite opens
-      window.scrollTo(0, 0)
+      document.body.style.height = ''
+      window.scrollTo({ top: 0, behavior: 'instant' })
     }
     return () => {
       document.body.style.overflow = ''
       document.body.style.position = ''
       document.body.style.width = ''
       document.body.style.top = ''
+      document.body.style.height = ''
     }
   }, [screen])
-
-  useEffect(() => {
-    audioRef.current = new Audio('/music.mp3')
-    audioRef.current.loop = true
-    audioRef.current.volume = 0.45
-    return () => audioRef.current?.pause()
-  }, [])
 
   const toggleMusic = () => {
     if (musicPlaying) { audioRef.current.pause() }
@@ -61,13 +63,8 @@ export default function App() {
       {screen === 'door' && <DoorScreen onOpen={handleOpen} />}
       {screen === 'invite' && <InviteScreen />}
 
-      {/* Music button - App level, truly fixed */}
       {screen === 'invite' && (
-        <button
-          className="app-music-btn"
-          onClick={toggleMusic}
-          aria-label="Musiqi"
-        >
+        <button className="app-music-btn" onClick={toggleMusic} aria-label="Musiqi">
           <span>{musicPlaying ? '♪' : '♩'}</span>
         </button>
       )}
